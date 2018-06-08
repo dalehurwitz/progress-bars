@@ -8,7 +8,7 @@
 npm install
 ```
 
-*Run dev server*
+*Start webpack-dev-server and node server*
 
 ```
 npm start

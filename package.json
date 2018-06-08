@@ -45,10 +45,14 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "concurrently \"npm run server:express\" \"npm run dev\"",
+    "dev": "node scripts/start.js",
+    "server:express": "nodemon server/server-express.js",
+    "server:node": "nodemon server/server-node.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
+  "proxy": "http://localhost:6060",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
@@ -90,5 +94,9 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.17.5"
   }
 }

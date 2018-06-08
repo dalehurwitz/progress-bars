@@ -27,7 +27,7 @@ class App extends Component {
     // received, error) affects multiple parts of the app.
     // In a simple case like this, inline API call is fine.
     window
-      .fetch('https://coding-exercise-bba593b.apps.y.cld.gov.au/bars')
+      .fetch('/bars')
       .then(response => {
         return response.json()
       })
