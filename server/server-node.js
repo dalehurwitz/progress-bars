@@ -1,9 +1,18 @@
 const http = require('http')
+const path = require('path')
+const fs = require('fs')
 const { generateBars } = require('./utils')
 const port = 6060
 
+const staticFiledirectory = path.join(__dirname, '../build')
+
 const routes = {
   GET: {
+    '/': process.env.NODE_ENV === 'production'
+      ? function (req, res) {
+        sendFile('index.html', 'text/html', res)
+      }
+      : null,
     '/bars': function (req, res) {
       sendJSON(res, generateBars())
     }
@@ -17,6 +26,20 @@ function getRoute (req, routes) {
 function sendJSON (res, payload) {
   res.writeHead(200, {'Content-Type': 'application/json'});
   res.end(JSON.stringify(payload))
+}
+
+function sendFile (filename, contentType, res) {
+  const filePath = path.join(staticFiledirectory, filename)
+
+  fs.readFile(filePath, function (error, file){
+    if (error){
+      res.status = 500
+      res.end(error);
+    } else {
+      res.writeHead(200, {'Content-Type': contentType});
+      res.end(file)
+    };
+  });
 }
 
 function notFound (req, res) {

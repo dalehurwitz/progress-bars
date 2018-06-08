@@ -12,6 +12,7 @@
     "babel-runtime": "6.26.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "chalk": "1.1.3",
+    "cross-env": "^5.1.6",
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
@@ -45,10 +46,15 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "concurrently \"npm run server:express\" \"npm run dev\"",
+    "start": "concurrently \"npm run server:express:dev\" \"npm run dev\"",
+    "now-start": "npm run serve",
+    "now-build": "echo 1",
+    "serve": "npm run build && npm run server:express:prod",
     "dev": "node scripts/start.js",
-    "server:express": "nodemon server/server-express.js",
-    "server:node": "nodemon server/server-node.js",
+    "server:express:prod": "cross-env NODE_ENV=production node server/server-express.js",
+    "server:node:prod": "cross-env NODE_ENV=production node server/server-node.js",
+    "server:express:dev": "nodemon server/server-express.js",
+    "server:node:dev": "nodemon server/server-node.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },
